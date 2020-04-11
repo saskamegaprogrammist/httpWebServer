@@ -1,4 +1,6 @@
 out/
+var/
+httptest.py
 .idea/
 .idea_modules/
 *.iml
