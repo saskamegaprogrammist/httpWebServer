@@ -1,4 +1,4 @@
 FROM openjdk:8
-COPY ./out/production/DockerJavaApp/ /tmp
+COPY ./out/production/httpWebServer/ /tmp
 WORKDIR /tmp
 ENTRYPOINT ["java","Main"]
