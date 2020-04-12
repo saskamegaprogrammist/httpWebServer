@@ -32,6 +32,8 @@ public class ExtensionResolver {
                 return JPG_CT;
             case JPG_EXT :
                 return JPG_CT;
+            case PNG_EXT :
+                return PNG_CT;
             case GIF_EXT :
                 return GIF_CT;
             case SWF_EXT :

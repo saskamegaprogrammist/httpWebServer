@@ -2,6 +2,8 @@ package server;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.StringTokenizer;
 
@@ -14,7 +16,8 @@ public class RequestsProcessor implements Runnable {
     private BufferedOutputStream bodyOutputWriter;
     private static final String GET_METHOD = "GET";
     private static final String HEAD_METHOD = "HEAD";
-    private static  String FILES_ROOT = ".";
+    private String FILES_ROOT = ".";
+    private boolean dirRequest = false;
 
     public RequestsProcessor(Socket socket, String root) {
         try {
@@ -37,22 +40,33 @@ public class RequestsProcessor implements Runnable {
             System.out.println(method);
 
             String fileRequested = parse.nextToken().toLowerCase();
+            fileRequested = URLDecoder.decode( fileRequested, "UTF-8" );
+
+            if (checkFileEscaping(fileRequested)) {
+                create403Answer();
+                return;
+            }
+
+            fileRequested = deleteParams(fileRequested);
+
 
             if (!checkMethod(method)) {
                 create405Answer();
             } else {
                 if (fileRequested.endsWith("/")) {
+                    dirRequest = true;
                     fileRequested += Config.INDEX_FILE;
                 }
 
                 File file = new File(FILES_ROOT, fileRequested);
+                int fileLength = (int) file.length();
+                byte[] fileData = readFileData(file, fileLength);
 
                 if (methodGet(method)) {
 
-                    int fileLength = (int) file.length();
-                    byte[] fileData = readFileData(file, fileLength);
 
                     headersOutputWriter.println("HTTP/1.1 200 OK");
+                    System.out.println("HTTP/1.1 200 OK");
                     headersOutputWriter.println("Server: Java Thread Pool Server by Alexis");
                     headersOutputWriter.println("Date: " + new Date());
                     headersOutputWriter.println("Content-type: " +  getContentType(fileRequested));
@@ -62,14 +76,43 @@ public class RequestsProcessor implements Runnable {
 
                     bodyOutputWriter.write(fileData, 0, fileLength);
                     bodyOutputWriter.flush();
-                }
+                } else {
+                    headersOutputWriter.print("HTTP/1.1 200 OK");
+                    headersOutputWriter.print("\r\n");
+                    headersOutputWriter.print("Server: Java Thread Pool Server by Alexis");
+                    headersOutputWriter.print("\r\n");
+                    headersOutputWriter.print("Date: " + new Date());
+                    headersOutputWriter.print("\r\n");
+                    headersOutputWriter.print("Content-Type: " +  getContentType(fileRequested));
+                    headersOutputWriter.print("\r\n");
+                    headersOutputWriter.println("Content-Length: " + fileLength);
+                    headersOutputWriter.print("\r\n");
+                    headersOutputWriter.print("\r\n");
+                    headersOutputWriter.flush(); // flush character output stream buffer
 
+                }
             }
         } catch (FileNotFoundException e) {
-                create404Answer();
+            try {
+                if (dirRequest) {
+                    create403Answer();
+                } else {
+                    create404Answer();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                inputReader.close();
+                headersOutputWriter.close();
+                bodyOutputWriter.close();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
 
     }
 
@@ -89,6 +132,13 @@ public class RequestsProcessor implements Runnable {
         return fileData;
     }
 
+    private boolean checkFileEscaping(String file) {
+        return file.contains("../");
+    }
+
+    private String deleteParams(String file) {
+        return file.split("\\?")[0];
+    }
 
     private boolean checkMethod(String method) {
         return methodGet(method) || methodHead(method);
@@ -109,15 +159,43 @@ public class RequestsProcessor implements Runnable {
         return extensionResolver.getCT(extension);
     }
 
-    private void create405Answer() {
+    private void create405Answer() throws IOException {
+        System.out.println("HTTP/1.1 405 Not Implemented");
         headersOutputWriter.println("HTTP/1.1 405 Not Implemented");
+        headersOutputWriter.println("Server: Java Thread Pool Server by Alexis");
+        headersOutputWriter.println("Date: " + new Date());
         headersOutputWriter.println();
         headersOutputWriter.flush();
+
+        bodyOutputWriter.flush();
     }
-    private void create404Answer() {
-        headersOutputWriter.println("HTTP/1.1 404 File Not Found");
+
+    private void create403Answer() throws IOException {
+        System.out.println("HTTP/1.1 403 Forbidden");
+        headersOutputWriter.println("HTTP/1.1 403 Forbidden");
+        headersOutputWriter.println("Server: Java Thread Pool Server by Alexis");
+        headersOutputWriter.println("Date: " + new Date());
         headersOutputWriter.println();
         headersOutputWriter.flush();
+
+        bodyOutputWriter.flush();
+    }
+    private void create404Answer() throws IOException {
+
+//        String file404 = "/" + Config.INDEX_FILE;
+//
+//        File file = new File(FILES_ROOT, file404);
+//        int fileLength = (int) file.length();
+//        byte[] fileData = readFileData(file, fileLength);
+
+        System.out.println("HTTP/1.1 404 File Not Found");
+        headersOutputWriter.println("HTTP/1.1 404 File Not Found");
+        headersOutputWriter.println("Server: Java Thread Pool Server by Alexis");
+        headersOutputWriter.println("Date: " + new Date());
+        headersOutputWriter.println();
+        headersOutputWriter.flush();
+//        bodyOutputWriter.write(fileData, 0, fileLength);
+        bodyOutputWriter.flush();
 
     }
 

@@ -21,6 +21,7 @@ public class ThreadPoolWorker implements Runnable {
             try {
                 Runnable nextTask = tasksQueue.poll();
                 if (nextTask != null) {
+                    System.out.println("new task running");
                     nextTask.run();
                 }
             } catch (Exception e) {
