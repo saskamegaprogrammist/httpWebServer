@@ -16,7 +16,7 @@ public class RequestsProcessor implements Runnable {
     private BufferedOutputStream bodyOutputWriter;
     private static final String GET_METHOD = "GET";
     private static final String HEAD_METHOD = "HEAD";
-    private String FILES_ROOT = ".";
+    private String FILES_ROOT = "";
     private boolean dirRequest = false;
 
     public RequestsProcessor(Socket socket, String root) {
@@ -59,6 +59,9 @@ public class RequestsProcessor implements Runnable {
                 }
 
                 File file = new File(FILES_ROOT, fileRequested);
+                System.out.println(FILES_ROOT);
+                System.out.println(fileRequested);
+
                 int fileLength = (int) file.length();
                 byte[] fileData = readFileData(file, fileLength);
 

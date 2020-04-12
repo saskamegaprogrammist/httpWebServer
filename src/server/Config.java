@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class Config {
-    public static final String CONFIG_FILE = "etc/httpd.conf";
+    public static final String CONFIG_FILE = "/etc/httpd.conf";
     public static final String INDEX_FILE = "index.html";
     public static final int PORT = 8080;
 
