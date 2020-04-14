@@ -1,0 +1,155 @@
+ab -n 10000 -c 500 http://localhost:8081/httptest/wikipedia_russia.html
+
+4 cpu
+
+Server Software:        Java
+Server Hostname:        localhost
+Server Port:            8080
+
+Document Path:          /httptest/wikipedia_russia.html
+Document Length:        954824 bytes
+
+Concurrency Level:      500
+Time taken for tests:   28.518 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      9549650000 bytes
+HTML transferred:       9548240000 bytes
+Requests per second:    350.65 [#/sec] (mean)
+Time per request:       1425.919 [ms] (mean)
+Time per request:       2.852 [ms] (mean, across all concurrent requests)
+Transfer rate:          327011.24 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0   68 207.7     20    1096
+Processing:    76 1351 368.2   1311    2489
+Waiting:        1  348 292.4    273    1850
+Total:        101 1419 381.1   1346    3176
+
+Percentage of the requests served within a certain time (ms)
+  50%   1346
+  66%   1421
+  75%   1527
+  80%   1658
+  90%   1974
+  95%   2199
+  98%   2332
+  99%   2424
+ 100%   3176 (longest request)
+
+3 cpu
+
+Server Software:        Java
+Server Hostname:        localhost
+Server Port:            8080
+
+Document Path:          /httptest/wikipedia_russia.html
+Document Length:        954824 bytes
+
+Concurrency Level:      500
+Time taken for tests:   29.011 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      9549650000 bytes
+HTML transferred:       9548240000 bytes
+Requests per second:    344.70 [#/sec] (mean)
+Time per request:       1450.550 [ms] (mean)
+Time per request:       2.901 [ms] (mean, across all concurrent requests)
+Transfer rate:          321458.46 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0   58 192.4     18    1131
+Processing:    17 1387 376.1   1332    2703
+Waiting:       10  405 305.3    322    1738
+Total:         78 1445 388.4   1373    2855
+
+Percentage of the requests served within a certain time (ms)
+  50%   1373
+  66%   1538
+  75%   1641
+  80%   1730
+  90%   1906
+  95%   2190
+  98%   2477
+  99%   2614
+ 100%   2855 (longest request)
+
+2 cpu
+
+Server Software:        Java
+Server Hostname:        localhost
+Server Port:            8080
+
+Document Path:          /httptest/wikipedia_russia.html
+Document Length:        954824 bytes
+
+Concurrency Level:      500
+Time taken for tests:   27.953 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      9549650000 bytes
+HTML transferred:       9548240000 bytes
+Requests per second:    357.74 [#/sec] (mean)
+Time per request:       1397.660 [ms] (mean)
+Time per request:       2.795 [ms] (mean, across all concurrent requests)
+Transfer rate:          333623.03 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0   52 190.0     15    1090
+Processing:    31 1337 353.4   1306    3043
+Waiting:        7  503 438.8    370    3014
+Total:         61 1389 398.9   1333    4127
+
+Percentage of the requests served within a certain time (ms)
+  50%   1333
+  66%   1441
+  75%   1569
+  80%   1633
+  90%   1862
+  95%   2138
+  98%   2236
+  99%   2671
+ 100%   4127 (longest request)
+
+1 cpu
+
+Server Software:        Java
+Server Hostname:        localhost
+Server Port:            8080
+
+Document Path:          /httptest/wikipedia_russia.html
+Document Length:        954824 bytes
+
+Concurrency Level:      500
+Time taken for tests:   25.891 seconds
+Complete requests:      10000
+Failed requests:        0
+Total transferred:      9549650000 bytes
+HTML transferred:       9548240000 bytes
+Requests per second:    386.23 [#/sec] (mean)
+Time per request:       1294.573 [ms] (mean)
+Time per request:       2.589 [ms] (mean, across all concurrent requests)
+Transfer rate:          360189.38 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0   54 199.6     15    1120
+Processing:    30 1234 265.3   1222    2005
+Waiting:       27  427 292.5    336    1613
+Total:         75 1288 318.4   1248    2736
+
+Percentage of the requests served within a certain time (ms)
+  50%   1248
+  66%   1330
+  75%   1397
+  80%   1430
+  90%   1633
+  95%   1844
+  98%   2181
+  99%   2479
+ 100%   2736 (longest request)
+
+

@@ -2,6 +2,7 @@ package server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.ArrayList;
 
 public class Server implements Runnable{
 
@@ -9,18 +10,29 @@ public class Server implements Runnable{
     private ServerSocket socket;
 
     private int port;
-    private boolean isConnected;
+    private volatile boolean isConnected;
+   // private ArrayList<ThreadPool> threadPoolArrayList;
     private ThreadPool threadPool;
     private String rootFile;
+    private static int threadPoolNumber;
+    private static int cpuLimit = 1;
 
 
     public Server(Config config) {
         this.port = Config.PORT;
         this.rootFile = config.getDocumentRoot();
-        threadPool = new ThreadPool(config.getThreadLimit());
+        threadPool = new ThreadPool(2*config.getCpuLimit() + 1);
+//        int threads = config.getThreadLimit();
+//        threadPoolArrayList = new ArrayList<>();
+//        this.cpuLimit = config.getCpuLimit();
+//        for (int i=0; i<this.cpuLimit; i++) {
+//            threadPoolArrayList.add(new ThreadPool(threads));
+//        }
+        //System.out.println(config.getThreadLimit());
+        System.out.println(2*config.getCpuLimit() + 1);
         this.isConnected = this.createSocketConnection();
         if (this.isConnected) {
-            System.out.println("Server started on port : " + this.port + "\n");
+            //System.out.println("Server started on port : " + this.port + "\n");
         }
     }
 
@@ -34,12 +46,18 @@ public class Server implements Runnable{
         }
     }
 
+    private int roundRobin() {
+        threadPoolNumber = (threadPoolNumber + 1) % cpuLimit;
+        return threadPoolNumber;
+    }
+
     @Override
     public void run() {
         if (this.isConnected) {
             for (;;) {
                 try {
-                    this.threadPool.execute(new RequestTask(socket.accept(), rootFile));
+                    this.threadPool.addTask(new RequestTask(socket.accept(), rootFile));
+                    //this.threadPoolArrayList.get(this.roundRobin()).addTask(new RequestTask(socket.accept(), rootFile));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

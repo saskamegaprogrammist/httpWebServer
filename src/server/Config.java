@@ -22,7 +22,11 @@ public class Config {
     }
 
     public int getCpuLimit() {
-        return Integer.parseInt(this.config.getProperty("cpu_limit"));
+        int cpu = Integer.parseInt(this.config.getProperty("cpu_limit"));
+        if (cpu <= 0) {
+            cpu = 1;
+        }
+        return cpu;
     }
 
     public int getThreadLimit() {

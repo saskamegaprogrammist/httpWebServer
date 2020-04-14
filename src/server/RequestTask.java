@@ -8,6 +8,7 @@ public class RequestTask implements Runnable {
     private String filesRoot;
 
     public RequestTask(Socket socket, String root) {
+        //System.out.println(socket.getInetAddress());
         this.clientSocket = socket;
         this.filesRoot = root;
     }

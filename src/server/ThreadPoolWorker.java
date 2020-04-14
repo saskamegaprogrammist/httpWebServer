@@ -17,11 +17,11 @@ public class ThreadPoolWorker implements Runnable {
 
     @Override
     public void run() {
-        while (threadPool.IsRunning()) {
+        while (!this.thread.isInterrupted()) {
             try {
                 Runnable nextTask = tasksQueue.poll();
                 if (nextTask != null) {
-                    System.out.println("new task running");
+                    //System.out.println("new task running");
                     nextTask.run();
                 }
             } catch (Exception e) {

@@ -16,11 +16,13 @@ public class RequestsProcessor implements Runnable {
     private BufferedOutputStream bodyOutputWriter;
     private static final String GET_METHOD = "GET";
     private static final String HEAD_METHOD = "HEAD";
+    private static final int TIMEOUT = 10000;
     private String FILES_ROOT = "";
     private boolean dirRequest = false;
 
     public RequestsProcessor(Socket socket, String root) {
         try {
+            //socket.setSoTimeout(TIMEOUT);
             FILES_ROOT += root;
             inputReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             bodyOutputWriter = new BufferedOutputStream(socket.getOutputStream());
@@ -37,7 +39,7 @@ public class RequestsProcessor implements Runnable {
             StringTokenizer parse = new StringTokenizer(input); //list of tokens
             String method = parse.nextToken().toUpperCase();
 
-            System.out.println(method);
+            //System.out.println(method);
 
             String fileRequested = parse.nextToken().toLowerCase();
             fileRequested = URLDecoder.decode( fileRequested, "UTF-8" );
@@ -59,8 +61,8 @@ public class RequestsProcessor implements Runnable {
                 }
 
                 File file = new File(FILES_ROOT, fileRequested);
-                System.out.println(FILES_ROOT);
-                System.out.println(fileRequested);
+                //System.out.println(FILES_ROOT);
+                //System.out.println(fileRequested);
 
                 int fileLength = (int) file.length();
                 byte[] fileData = readFileData(file, fileLength);
@@ -69,7 +71,7 @@ public class RequestsProcessor implements Runnable {
 
 
                     headersOutputWriter.println("HTTP/1.1 200 OK");
-                    System.out.println("HTTP/1.1 200 OK");
+                    //System.out.println("HTTP/1.1 200 OK");
                     headersOutputWriter.println("Server: Java Thread Pool Server by Alexis");
                     headersOutputWriter.println("Date: " + new Date());
                     headersOutputWriter.println("Content-type: " +  getContentType(fileRequested));
@@ -163,7 +165,7 @@ public class RequestsProcessor implements Runnable {
     }
 
     private void create405Answer() throws IOException {
-        System.out.println("HTTP/1.1 405 Not Implemented");
+        //System.out.println("HTTP/1.1 405 Not Implemented");
         headersOutputWriter.println("HTTP/1.1 405 Not Implemented");
         headersOutputWriter.println("Server: Java Thread Pool Server by Alexis");
         headersOutputWriter.println("Date: " + new Date());
@@ -174,7 +176,7 @@ public class RequestsProcessor implements Runnable {
     }
 
     private void create403Answer() throws IOException {
-        System.out.println("HTTP/1.1 403 Forbidden");
+        //System.out.println("HTTP/1.1 403 Forbidden");
         headersOutputWriter.println("HTTP/1.1 403 Forbidden");
         headersOutputWriter.println("Server: Java Thread Pool Server by Alexis");
         headersOutputWriter.println("Date: " + new Date());
@@ -191,7 +193,7 @@ public class RequestsProcessor implements Runnable {
 //        int fileLength = (int) file.length();
 //        byte[] fileData = readFileData(file, fileLength);
 
-        System.out.println("HTTP/1.1 404 File Not Found");
+        //System.out.println("HTTP/1.1 404 File Not Found");
         headersOutputWriter.println("HTTP/1.1 404 File Not Found");
         headersOutputWriter.println("Server: Java Thread Pool Server by Alexis");
         headersOutputWriter.println("Date: " + new Date());

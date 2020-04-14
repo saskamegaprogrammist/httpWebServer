@@ -6,7 +6,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class ThreadPool implements Executor {
+public class ThreadPool {
 
     //first in first out queue, blocking if reading from empty queue or writing in full queue
     private LinkedBlockingQueue<Runnable> tasksQueue;
@@ -30,8 +30,7 @@ public class ThreadPool implements Executor {
         }
     }
 
-    @Override
-    public void execute(Runnable task) {
+    public void addTask(Runnable task) {
         if (isRunning) {
             this.tasksQueue.offer(task);
         }
@@ -42,11 +41,11 @@ public class ThreadPool implements Executor {
         this.threadPool.forEach(ThreadPoolWorker::stop);
     }
 
-    public boolean IsRunning() {
+    public synchronized boolean IsRunning() {
         return this.isRunning;
     }
 
-    public LinkedBlockingQueue<Runnable> getTasksQueue() {
+    public synchronized LinkedBlockingQueue<Runnable> getTasksQueue() {
         return this.tasksQueue;
     }
 }
