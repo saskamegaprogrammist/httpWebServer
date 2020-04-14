@@ -36,7 +36,9 @@ public class RequestsProcessor implements Runnable {
     public void run() {
         try {
             String input = inputReader.readLine();
+            if (input == null) return;
             StringTokenizer parse = new StringTokenizer(input); //list of tokens
+            if (!parse.hasMoreTokens()) return;
             String method = parse.nextToken().toUpperCase();
 
             //System.out.println(method);
