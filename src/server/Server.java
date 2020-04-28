@@ -21,15 +21,16 @@ public class Server implements Runnable{
     public Server(Config config) {
         this.port = Config.PORT;
         this.rootFile = config.getDocumentRoot();
-        threadPool = new ThreadPool(2*config.getCpuLimit() + 1);
+        int threadsNumber = config.getThreadLimit();
+//        int threadsNumber = Runtime.getRuntime().availableProcessors() + 1;
+        threadPool = new ThreadPool(threadsNumber);
+        System.out.println(threadsNumber);
 //        int threads = config.getThreadLimit();
 //        threadPoolArrayList = new ArrayList<>();
 //        this.cpuLimit = config.getCpuLimit();
 //        for (int i=0; i<this.cpuLimit; i++) {
 //            threadPoolArrayList.add(new ThreadPool(threads));
 //        }
-        //System.out.println(config.getThreadLimit());
-        System.out.println(2*config.getCpuLimit() + 1);
         this.isConnected = this.createSocketConnection();
         if (this.isConnected) {
             //System.out.println("Server started on port : " + this.port + "\n");

@@ -1,155 +1,346 @@
-ab -n 10000 -c 500 http://localhost:8081/httptest/wikipedia_russia.html
+5 threads
 
-4 cpu
+MY WITHOUT CACHE
 
-Server Software:        Java
-Server Hostname:        localhost
-Server Port:            8080
+ab -n 10000 -c 100  localhost:8080/httptest/jquery-1.9.1.js
+This is ApacheBench, Version 2.3 <$Revision: 1807734 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
 
-Document Path:          /httptest/wikipedia_russia.html
-Document Length:        954824 bytes
-
-Concurrency Level:      500
-Time taken for tests:   28.518 seconds
-Complete requests:      10000
-Failed requests:        0
-Total transferred:      9549650000 bytes
-HTML transferred:       9548240000 bytes
-Requests per second:    350.65 [#/sec] (mean)
-Time per request:       1425.919 [ms] (mean)
-Time per request:       2.852 [ms] (mean, across all concurrent requests)
-Transfer rate:          327011.24 [Kbytes/sec] received
-
-Connection Times (ms)
-              min  mean[+/-sd] median   max
-Connect:        0   68 207.7     20    1096
-Processing:    76 1351 368.2   1311    2489
-Waiting:        1  348 292.4    273    1850
-Total:        101 1419 381.1   1346    3176
-
-Percentage of the requests served within a certain time (ms)
-  50%   1346
-  66%   1421
-  75%   1527
-  80%   1658
-  90%   1974
-  95%   2199
-  98%   2332
-  99%   2424
- 100%   3176 (longest request)
-
-3 cpu
+Benchmarking localhost (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
 
 Server Software:        Java
 Server Hostname:        localhost
 Server Port:            8080
 
-Document Path:          /httptest/wikipedia_russia.html
-Document Length:        954824 bytes
+Document Path:          /httptest/jquery-1.9.1.js
+Document Length:        268381 bytes
 
-Concurrency Level:      500
-Time taken for tests:   29.011 seconds
+Concurrency Level:      100
+Time taken for tests:   9.560 seconds
 Complete requests:      10000
 Failed requests:        0
-Total transferred:      9549650000 bytes
-HTML transferred:       9548240000 bytes
-Requests per second:    344.70 [#/sec] (mean)
-Time per request:       1450.550 [ms] (mean)
-Time per request:       2.901 [ms] (mean, across all concurrent requests)
-Transfer rate:          321458.46 [Kbytes/sec] received
+Total transferred:      2685220000 bytes
+HTML transferred:       2683810000 bytes
+Requests per second:    1046.06 [#/sec] (mean)
+Time per request:       95.596 [ms] (mean)
+Time per request:       0.956 [ms] (mean, across all concurrent requests)
+Transfer rate:          274307.94 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        0   58 192.4     18    1131
-Processing:    17 1387 376.1   1332    2703
-Waiting:       10  405 305.3    322    1738
-Total:         78 1445 388.4   1373    2855
+Connect:        0    1   1.8      0      65
+Processing:    31   94  53.3     87    1121
+Waiting:        2   82  52.1     81    1116
+Total:         33   95  53.3     88    1122
 
 Percentage of the requests served within a certain time (ms)
-  50%   1373
-  66%   1538
-  75%   1641
-  80%   1730
-  90%   1906
-  95%   2190
-  98%   2477
-  99%   2614
- 100%   2855 (longest request)
+  50%     88
+  66%     92
+  75%     96
+  80%     99
+  90%    119
+  95%    150
+  98%    182
+  99%    215
+ 100%   1122 (longest request)
 
-2 cpu
+ MY WITH CACHE
 
-Server Software:        Java
+ ab -n 10000 -c 100  localhost:8080/httptest/jquery-1.9.1.js
+ This is ApacheBench, Version 2.3 <$Revision: 1807734 $>
+ Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+ Licensed to The Apache Software Foundation, http://www.apache.org/
+
+ Benchmarking localhost (be patient)
+ Completed 1000 requests
+ Completed 2000 requests
+ Completed 3000 requests
+ Completed 4000 requests
+ Completed 5000 requests
+ Completed 6000 requests
+ Completed 7000 requests
+ Completed 8000 requests
+ Completed 9000 requests
+ Completed 10000 requests
+ Finished 10000 requests
+
+
+ Server Software:        Java
+ Server Hostname:        localhost
+ Server Port:            8080
+
+ Document Path:          /httptest/jquery-1.9.1.js
+ Document Length:        268381 bytes
+
+ Concurrency Level:      100
+ Time taken for tests:   6.616 seconds
+ Complete requests:      10000
+ Failed requests:        0
+ Total transferred:      2685360000 bytes
+ HTML transferred:       2683810000 bytes
+ Requests per second:    1511.46 [#/sec] (mean)
+ Time per request:       66.161 [ms] (mean)
+ Time per request:       0.662 [ms] (mean, across all concurrent requests)
+ Transfer rate:          396369.57 [Kbytes/sec] received
+
+ Connection Times (ms)
+               min  mean[+/-sd] median   max
+ Connect:        0    1   2.1      1      37
+ Processing:    16   64  64.0     58    1076
+ Waiting:        1   46  63.0     47    1071
+ Total:         18   66  64.7     59    1085
+
+ Percentage of the requests served within a certain time (ms)
+   50%     59
+   66%     62
+   75%     66
+   80%     68
+   90%     80
+   95%    111
+   98%    149
+   99%    187
+  100%   1085 (longest request)
+
+NGINX
+
+ ab -n 10000 -c 100  localhost:80/jquery-1.9.1.js
+ This is ApacheBench, Version 2.3 <$Revision: 1807734 $>
+ Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+ Licensed to The Apache Software Foundation, http://www.apache.org/
+
+ Benchmarking localhost (be patient)
+ Completed 1000 requests
+ Completed 2000 requests
+ Completed 3000 requests
+ Completed 4000 requests
+ Completed 5000 requests
+ Completed 6000 requests
+ Completed 7000 requests
+ Completed 8000 requests
+ Completed 9000 requests
+ Completed 10000 requests
+ Finished 10000 requests
+
+
+
+ Server Software:
+ Server Hostname:        localhost
+ Server Port:            80
+
+ Document Path:          /jquery-1.9.1.js
+ Document Length:        0 bytes
+
+ Concurrency Level:      100
+ Time taken for tests:   3.637 seconds
+ Complete requests:      10000
+ Failed requests:        10000
+    (Connect: 0, Receive: 0, Length: 9988, Exceptions: 12)
+ Total transferred:      2683186308 bytes
+ HTML transferred:       2680589428 bytes
+ Requests per second:    2749.79 [#/sec] (mean)
+ Time per request:       36.366 [ms] (mean)
+ Time per request:       0.364 [ms] (mean, across all concurrent requests)
+ Transfer rate:          720526.11 [Kbytes/sec] received
+
+ Connection Times (ms)
+               min  mean[+/-sd] median   max
+ Connect:        0    2   1.1      2      19
+ Processing:     2   34   7.3     32      87
+ Waiting:        0    2   1.0      2      19
+ Total:          8   36   7.6     34      89
+
+ Percentage of the requests served within a certain time (ms)
+   50%     34
+   66%     35
+   75%     37
+   80%     39
+   90%     45
+   95%     49
+   98%     61
+   99%     69
+  100%     89 (longest request)
+
+MY WITHOUT CACHE
+
+ab -n 10000 -c 100  localhost:8080/ef35c.jpeg
+This is ApacheBench, Version 2.3 <$Revision: 1807734 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:
 Server Hostname:        localhost
 Server Port:            8080
 
-Document Path:          /httptest/wikipedia_russia.html
-Document Length:        954824 bytes
+Document Path:          /ef35c.jpeg
+Document Length:        0 bytes
 
-Concurrency Level:      500
-Time taken for tests:   27.953 seconds
+Concurrency Level:      100
+Time taken for tests:   3.534 seconds
 Complete requests:      10000
 Failed requests:        0
-Total transferred:      9549650000 bytes
-HTML transferred:       9548240000 bytes
-Requests per second:    357.74 [#/sec] (mean)
-Time per request:       1397.660 [ms] (mean)
-Time per request:       2.795 [ms] (mean, across all concurrent requests)
-Transfer rate:          333623.03 [Kbytes/sec] received
+Total transferred:      1050000 bytes
+HTML transferred:       0 bytes
+Requests per second:    2829.66 [#/sec] (mean)
+Time per request:       35.340 [ms] (mean)
+Time per request:       0.353 [ms] (mean, across all concurrent requests)
+Transfer rate:          290.15 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        0   52 190.0     15    1090
-Processing:    31 1337 353.4   1306    3043
-Waiting:        7  503 438.8    370    3014
-Total:         61 1389 398.9   1333    4127
+Connect:        0    2   2.4      2      22
+Processing:     1   26 118.6     10    1097
+Waiting:        1   25 118.7      9    1094
+Total:          2   29 118.6     12    1099
 
 Percentage of the requests served within a certain time (ms)
-  50%   1333
-  66%   1441
-  75%   1569
-  80%   1633
-  90%   1862
-  95%   2138
-  98%   2236
-  99%   2671
- 100%   4127 (longest request)
+  50%     12
+  66%     15
+  75%     17
+  80%     19
+  90%     26
+  95%     35
+  98%     58
+  99%   1013
+ 100%   1099 (longest request)
 
-1 cpu
+MY WITH CACHE
 
-Server Software:        Java
+ ab -n 10000 -c 100  localhost:8080/ef35c.jpeg
+ This is ApacheBench, Version 2.3 <$Revision: 1807734 $>
+ Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+ Licensed to The Apache Software Foundation, http://www.apache.org/
+
+ Benchmarking localhost (be patient)
+ Completed 1000 requests
+ Completed 2000 requests
+ Completed 3000 requests
+ Completed 4000 requests
+ Completed 5000 requests
+ Completed 6000 requests
+ Completed 7000 requests
+ Completed 8000 requests
+ Completed 9000 requests
+ Completed 10000 requests
+ Finished 10000 requests
+
+
+ Server Software:
+ Server Hostname:        localhost
+ Server Port:            8080
+
+ Document Path:          /ef35c.jpeg
+ Document Length:        0 bytes
+
+ Concurrency Level:      100
+ Time taken for tests:   2.755 seconds
+ Complete requests:      10000
+ Failed requests:        0
+ Total transferred:      1050000 bytes
+ HTML transferred:       0 bytes
+ Requests per second:    3630.04 [#/sec] (mean)
+ Time per request:       27.548 [ms] (mean)
+ Time per request:       0.275 [ms] (mean, across all concurrent requests)
+ Transfer rate:          372.22 [Kbytes/sec] received
+
+ Connection Times (ms)
+               min  mean[+/-sd] median   max
+ Connect:        0    1   1.6      1      20
+ Processing:     1   19  96.6      8    1036
+ Waiting:        1   18  96.6      7    1036
+ Total:          2   21  96.6     10    1040
+
+ Percentage of the requests served within a certain time (ms)
+   50%     10
+   66%     11
+   75%     13
+   80%     14
+   90%     18
+   95%     23
+   98%     37
+   99%     65
+  100%   1040 (longest request)
+
+NGINX
+
+ab -n 10000 -c 100  localhost:80/ef35c.jpeg
+This is ApacheBench, Version 2.3 <$Revision: 1807734 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:
 Server Hostname:        localhost
-Server Port:            8080
+Server Port:            80
 
-Document Path:          /httptest/wikipedia_russia.html
-Document Length:        954824 bytes
+Document Path:          /ef35c.jpeg
+Document Length:        0 bytes
 
-Concurrency Level:      500
-Time taken for tests:   25.891 seconds
+Concurrency Level:      100
+Time taken for tests:   2.445 seconds
 Complete requests:      10000
-Failed requests:        0
-Total transferred:      9549650000 bytes
-HTML transferred:       9548240000 bytes
-Requests per second:    386.23 [#/sec] (mean)
-Time per request:       1294.573 [ms] (mean)
-Time per request:       2.589 [ms] (mean, across all concurrent requests)
-Transfer rate:          360189.38 [Kbytes/sec] received
+Failed requests:        10000
+   (Connect: 0, Receive: 0, Length: 9988, Exceptions: 12)
+Total transferred:      1605171480 bytes
+HTML transferred:       1602694456 bytes
+Requests per second:    4089.41 [#/sec] (mean)
+Time per request:       24.453 [ms] (mean)
+Time per request:       0.245 [ms] (mean, across all concurrent requests)
+Transfer rate:          641036.24 [Kbytes/sec] received
 
 Connection Times (ms)
               min  mean[+/-sd] median   max
-Connect:        0   54 199.6     15    1120
-Processing:    30 1234 265.3   1222    2005
-Waiting:       27  427 292.5    336    1613
-Total:         75 1288 318.4   1248    2736
+Connect:        0    2   0.9      2      14
+Processing:     3   22   4.8     21      52
+Waiting:        0    2   2.8      2      32
+Total:          5   24   5.2     23      55
 
 Percentage of the requests served within a certain time (ms)
-  50%   1248
-  66%   1330
-  75%   1397
-  80%   1430
-  90%   1633
-  95%   1844
-  98%   2181
-  99%   2479
- 100%   2736 (longest request)
-
+  50%     23
+  66%     24
+  75%     25
+  80%     27
+  90%     31
+  95%     34
+  98%     40
+  99%     45
+ 100%     55 (longest request)
 

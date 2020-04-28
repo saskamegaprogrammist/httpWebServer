@@ -2,7 +2,7 @@
 
 Thread Pool Java server for static files
 
-Number of threads : 2*cpu_limit + 1
+Number of threads : thread_limit
 
 #### Build 
 
